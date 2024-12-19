@@ -19,12 +19,23 @@ class QueryCrafter {
 	const totalKeyCount = Object.keys(this.filters).length;
     for (const key in this.filters) {
 		keyCount++;
-		if (this.filters[key] !== '') {
-			this.conditions += ` ${key}='${this.filters[key]}'`;
+		const value = this.filters[key];
+		this.sanitizeFilters(value);
+		if (value !== '') {
+			this.conditions += ` ${key}='${value}'`;
 			if(keyCount < totalKeyCount) this.conditions += ' AND ';
 		}
     }
     this.conditions = this.conditions.trim();
+  }
+
+  private sanitizeFilters(value :string) {
+		if (typeof value === 'string') {
+			// Example: Remove dangerous SQL keywords (basic sanitization)
+			if (/(\b(SELECT|DROP|DELETE|INSERT|UPDATE|UNION|--)\b)/i.test(value)) {
+			  throw new Error(`Invalid value: ${value}`);
+			}
+		}
   }
 
   addOffset(offset: number) {
