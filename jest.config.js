@@ -6,4 +6,7 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts'],
+  coverageDirectory: 'coverage',
 };
