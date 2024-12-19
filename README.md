@@ -28,7 +28,7 @@ const queryCrafter = new QueryCrafter(filters, fields, table);
 queryCrafter.addOffset(10);
 queryCrafter.addLimit(5);
 queryCrafter.sortResults('name', 'ASC');
-queryCrafter.joinConditions('orders', { 'users.id': 'orders.user_id' });
+queryCrafter.joinConditions('orders', { 'users': 'id', 'order': 'user_id' });
 
 const sqlQuery = queryCrafter.buildFinalQuery();
 console.log(sqlQuery);
