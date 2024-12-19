@@ -39,6 +39,11 @@ Run the example file to check the output:
 ```
 tsx .\examples\example_01.ts
 ```
+### Running Test Cases
+To run the test cases, use the following command:
+```
+npx jest
+```
 
 ### Scripts
 test: Placeholder for test command
