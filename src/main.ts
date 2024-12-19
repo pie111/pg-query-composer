@@ -55,7 +55,7 @@ class QueryCrafter {
 	}
 
 	private sanitizeFields(fields: Array<string>): Array<string> {
-		return fields.map(field => {
+		return fields.map((field) => {
 			if (/\W/.test(field) || /(\b(SELECT|DROP|DELETE|INSERT|UPDATE|UNION|--)\b)/i.test(field)) {
 				throw new Error(`Invalid field name: ${field}`);
 			}
