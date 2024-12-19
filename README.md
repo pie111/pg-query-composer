@@ -33,8 +33,6 @@ queryCrafter.joinConditions('orders', { 'users.id': 'orders.user_id' });
 const sqlQuery = queryCrafter.buildFinalQuery();
 console.log(sqlQuery);
 ```
-tsconfig.json Configuration
-The TypeScript configuration for this project (tsconfig.json) includes settings for targeting ES2016, using CommonJS modules, enabling strict type-checking, and other TypeScript compiler options to ensure a consistent and reliable development experience.
 
 ### Local Dev Testing
 Run the example file to check the output:
