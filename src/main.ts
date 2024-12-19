@@ -12,6 +12,9 @@ class QueryCrafter {
 		this.filters = filters;
 		this.fields = fields;
 		this.table = table;
+		this.filters = this.sanitizeFiltersObject(filters);
+		this.fields = this.sanitizeFields(fields);
+    	this.table = this.sanitizeTable(table);
 	}
 
 	private craftConditions() {
@@ -29,13 +32,43 @@ class QueryCrafter {
 		this.conditions = this.conditions.trim();
 	}
 
-	private sanitizeFilters(value :string) {
+	private sanitizeFilters(value: string): string {
 		if (typeof value === 'string') {
-			// Example: Remove dangerous SQL keywords (basic sanitization)
+			// Remove dangerous SQL keywords (basic sanitization)
 			if (/(\b(SELECT|DROP|DELETE|INSERT|UPDATE|UNION|--)\b)/i.test(value)) {
-			  throw new Error(`Invalid value: ${value}`);
+				throw new Error(`Invalid value: ${value}`);
 			}
+			// Remove any single quotes to prevent SQL injection
+			value = value.replace(/'/g, "''");
+			// Remove any semicolons to prevent SQL injection
+			value = value.replace(/;/g, '');
 		}
+		return value;
+	}
+
+	private sanitizeFiltersObject(filters: { [key: string]: string }): { [key: string]: string } {
+		const sanitizedFilters: { [key: string]: string } = {};
+		for (const key in filters) {
+			sanitizedFilters[key] = this.sanitizeFilters(filters[key]);
+		}
+		return sanitizedFilters;
+	}
+
+	private sanitizeFields(fields: Array<string>): Array<string> {
+		return fields.map(field => {
+			if (/\W/.test(field) || /(\b(SELECT|DROP|DELETE|INSERT|UPDATE|UNION|--)\b)/i.test(field)) {
+				throw new Error(`Invalid field name: ${field}`);
+			}
+			return field;
+		});
+	}
+
+
+	private sanitizeTable(table: string): string {
+		if (/\W/.test(table) || /(\b(SELECT|DROP|DELETE|INSERT|UPDATE|UNION|--)\b)/i.test(table)) {
+			throw new Error(`Invalid table name: ${table}`);
+		}
+		return table;
 	}
 
 	addOffset(offset: number) {

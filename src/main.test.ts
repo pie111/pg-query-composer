@@ -81,9 +81,7 @@ describe('QueryCrafter', () => {
         const filters = { name: 'John', age: '30', query: 'DROP TABLE users' };
         const fields = ['name', 'age'];
         const table = 'users';
-        const queryCrafter = new QueryCrafter(filters, fields, table);
-
-        expect(() => queryCrafter.buildFinalQuery()).toThrow('Invalid value: DROP TABLE users');
+        expect(() => new QueryCrafter(filters, fields, table)).toThrow('Invalid value: DROP TABLE users');
     });
 
     it('should throw error for invalid join condition', () => {
@@ -94,5 +92,76 @@ describe('QueryCrafter', () => {
         const queryCrafter = new QueryCrafter(filters, fields, table);
 
         expect(() => queryCrafter.joinConditions('orders', joinCondition)).toThrow('Join condition should have atleast two tables');
+    });
+});
+
+describe('sanitizeFields', () => {
+    let queryCrafter: any;
+
+    beforeEach(() => {
+        queryCrafter = new QueryCrafter({}, [], ''); // Initialize with dummy values
+    });
+
+    it('should return the same fields if they are valid', () => {
+        const fields = ['name', 'age', 'user_id'];
+        const sanitizedFields = (queryCrafter as any).sanitizeFields(fields);
+        expect(sanitizedFields).toEqual(fields);
+    });
+
+    it('should throw an error for fields with special characters', () => {
+        const fields = ['name', 'age$', 'user_id'];
+        expect(() => (queryCrafter as any).sanitizeFields(fields)).toThrow('Invalid field name: age$');
+    });
+
+    it('should throw an error for fields with spaces', () => {
+        const fields = ['name', 'user id', 'age'];
+        expect(() => (queryCrafter as any).sanitizeFields(fields)).toThrow('Invalid field name: user id');
+    });
+
+    it('should throw an error for fields with SQL keywords', () => {
+        const fields = ['name', 'SELECT', 'age'];
+        expect(() => (queryCrafter as any).sanitizeFields(fields)).toThrow('Invalid field name: SELECT');
+    });
+
+    it('should return an empty array if no fields are provided', () => {
+        const fields: string[] = [];
+        const sanitizedFields = (queryCrafter as any).sanitizeFields(fields);
+        expect(sanitizedFields).toEqual([]);
+    });
+});
+
+
+
+describe('sanitizeTable', () => {
+    let queryCrafter: any;
+
+    beforeEach(() => {
+        queryCrafter = new QueryCrafter({}, [], ''); // Initialize with dummy values
+    });
+
+    it('should return the same table name if it is valid', () => {
+        const table = 'users';
+        const sanitizedTable = (queryCrafter as any).sanitizeTable(table);
+        expect(sanitizedTable).toBe(table);
+    });
+
+    it('should throw an error for table name with special characters', () => {
+        const table = 'users$';
+        expect(() => (queryCrafter as any).sanitizeTable(table)).toThrow('Invalid table name: users$');
+    });
+
+    it('should throw an error for table name with spaces', () => {
+        const table = 'user table';
+        expect(() => (queryCrafter as any).sanitizeTable(table)).toThrow('Invalid table name: user table');
+    });
+
+    it('should throw an error for table name with SQL keywords', () => {
+        const table = 'SELECT';
+        expect(() => (queryCrafter as any).sanitizeTable(table)).toThrow('Invalid table name: SELECT');
+    });
+
+    it('should throw an error for table name with & start', () => {
+        const table = '&*users';
+        expect(() => (queryCrafter as any).sanitizeTable(table)).toThrow('Invalid table name: &*users');
     });
 });
