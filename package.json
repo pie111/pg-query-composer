@@ -1,8 +1,8 @@
 {
-  "name": "pg_query_crafter",
+  "name": "pg-query-composer",
   "version": "1.0.0",
-  "description": "Tool to create craft query from rest api",
-  "main": "main.js",
+  "description": "Tool to simplify SQL query construction from REST API inputs.",
+  "main": "main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": " eslint . --fix"

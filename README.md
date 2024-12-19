@@ -1,6 +1,6 @@
 
-# PG QUERY CRAFTER
-pg_query_crafter is a TypeScript library designed to help craft SQL queries from REST API inputs. This project is intended to simplify the process of building complex SQL queries using a straightforward and flexible interface.
+# pg-query-compose
+pg-query-compose is a TypeScript library designed to help craft SQL queries from REST API inputs. This project is intended to simplify the process of building complex SQL queries using a straightforward and flexible interface.
 
 Features
 1. Dynamic SQL query generation
