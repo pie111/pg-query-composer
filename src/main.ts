@@ -3,33 +3,40 @@ class QueryCrafter {
   fields: Array<string>;
   table: string;
   conditions: string = '';
-  offset: number;
-  limit: number;
+  sortConditions: string = '';
+  offsetCondition: string = '';
+  limitCondition: string = '';
   joinQuery: string = '';
 
-  constructor(filters: { [key: string]: string }, fields: Array<string>, table: string, offset: number = 0,limit:number) {
+  constructor(filters: { [key: string]: string }, fields: Array<string>, table: string) {
     this.filters = filters;
     this.fields = fields;
     this.table = table;
-    this.offset = offset;
-    this.limit = limit;
   }
 
   private craftConditions() {
+	let keyCount = 0;
+	const totalKeyCount = Object.keys(this.filters).length;
     for (const key in this.filters) {
-      if (this.filters[key] !== '') {
-        this.conditions += ` ${key}=${this.filters[key]} &`;
-      }
+		keyCount++;
+		if (this.filters[key] !== '') {
+			this.conditions += ` ${key}='${this.filters[key]}'`;
+			if(keyCount < totalKeyCount) this.conditions += ' AND ';
+		}
     }
-    this.conditions = this.conditions.trim().replace(/&+$/, '');
+    this.conditions = this.conditions.trim();
   }
 
-  private addOffset(offset: number) {
-    this.conditions += ` OFFSET ${offset}`;
+  addOffset(offset: number) {
+    this.offsetCondition += ` OFFSET ${offset}`;
   }
 
-  private addLimit(limit: number) {
-    this.conditions += ` LIMIT ${limit}`;
+  addLimit(limit: number) {
+    this.limitCondition += ` LIMIT ${limit}`;
+  }
+
+  sortResults(sortBy: string, sortOrder: string) {
+	this.sortConditions += ` ORDER BY ${sortBy} ${sortOrder}`;
   }
 
   /**
@@ -55,12 +62,13 @@ class QueryCrafter {
 
   buildFinalQuery() {
     this.craftConditions();
-    if(this.offset) this.addOffset(this.offset);
-    if(this.limit) this.addLimit(this.limit);
     let query = `SELECT ${this.fields.join(', ')} FROM ${this.table}`;
     if(this.joinQuery) query += this.joinQuery;
-    query += ` WHERE ${this.conditions.trim()};`;
-    return query;
+    query += ` WHERE ${this.conditions.trim()}`;
+	if(this.sortConditions) query += this.sortConditions;
+	if(this.offsetCondition) query += this.offsetCondition;
+	if(this.limitCondition) query += this.limitCondition;
+    return query+';';
   }
 
 }
