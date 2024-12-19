@@ -56,4 +56,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Contributions are welcome! Please submit a pull request or open an issue to discuss what you would like to change.
 
 ### Issues
-For any issues, please use the GitHub Issues page.
+For any issues, please use the GitHub [Issues](https://github.com/pie111/pg_query_crafter/issues) page.
