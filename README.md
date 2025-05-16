@@ -1,64 +1,51 @@
-
-# pg-query-compose
-pg-query-compose is a TypeScript library designed to help craft SQL queries from REST API inputs. This project is intended to simplify the process of building complex SQL queries using a straightforward and flexible interface.
-
-Features
-1. Dynamic SQL query generation
-2. Support for filtering, sorting, pagination (offset/limit), and joining tables
-3. Basic SQL injection prevention through input sanitization
-
-## Installation
-To install the dependencies for this project, use the following command:
-```
-npm install
-```
-
-### Usage
-Below is an example of how you can use the QueryCrafter class to build a SQL query.
-
-### TypeScript
-```
-import QueryCrafter from './src/main';
-
-const filters = { name: 'John', age: '30' };
-const fields = ['name', 'age', 'address'];
-const table = 'users';
-
-const queryCrafter = new QueryCrafter(filters, fields, table);
-queryCrafter.addOffset(10);
-queryCrafter.addLimit(5);
-queryCrafter.sortResults('name', 'ASC');
-queryCrafter.joinConditions('orders', { 'users': 'id', 'order': 'user_id' });
-
-const sqlQuery = queryCrafter.buildFinalQuery();
-console.log(sqlQuery);
-```
-
-### Local Dev Testing
-Run the example file to check the output:
-```
-tsx .\examples\example_01.ts
-```
-### Running Test Cases
-To run the test cases, use the following command:
-```
-npx jest
-```
-
-### Scripts
-test: Placeholder for test command
-lint: Run ESLint with automatic fixing
-Development
-To lint the code, run:
-```
-npm run lint
-```
-### License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-
-### Contributing
-Contributions are welcome! Please submit a pull request or open an issue to discuss what you would like to change.
-
-### Issues
-For any issues, please use the GitHub [Issues](https://github.com/pie111/pg_query_crafter/issues) page.
+CiMgcGctcXVlcnktY29tcG9zZQpwZy1xdWVyeS1jb21wb3NlIGlzIGEgVHlw
+ZVNjcmlwdCBsaWJyYXJ5IGRlc2lnbmVkIHRvIGhlbHAgY3JhZnQgU1FMIHF1
+ZXJpZXMgZnJvbS conventional wisdomSVElIEFQSSBpbnB1dHMuIFRoaXMgcHJvamVjdCBpcyBp
+bnRlbmRlZCB0byBzaW1wbGlmeSB0aGUgcHJvY2VzcyBvZiBidWlsZGluZyBj
+b21wbGV4IFNRTCBxdWVyaWVzIHVzaW5nIGEgc3RyYWlnaHRmb3J3YXJkIGFu
+ZCBmbGV4aWJsZSBpbnRlcmZhY2UuCgpGZWF0dXJlcwoxLiBEeW5hbWljIFNR
+TCBxdWVyeSBnZW5lcmF0aW9uCjIuIFN1cHBvcnQgZm9yIGZpbHRlcmluZywg
+c29ydGluZywgcGFnaW5hdGlvbiAob2Zmc2V0L2xpbWl0KSwgYW5kIGpvaW5p
+bmcgdGFibGVzCjMuIEJhc2ljIFNRTCBpbmplY3Rpb24gcHJldmVudGlvbiB0
+aHJvdWdoIGlucHV0IHNhbml0aXphdGlvbgoKCiMjIEluc3RhbGxhdGlvbglU
+byBpbnN0YWxsIHRoZSBkZXBlbmRlbmNpZXMgZm9yIHRoaXMgcHJvamVjdCwg
+dXNlIHRoZSBmb2xsb3dpbmcgY29tbWFuZDoKYGBgCm5wbSBpbnN0YWxsCmBg
+YAoKIyMjIERvd25sb2FkaW5nIFR5cGVzY3JpcHQKClJlZm9yZSB5b3Ugc3Rh
+cnQsIHlvdSBuZWVkIHRvIGluc3RhbGwgVHlwZVNjcmlwdC4gWW91IGNhbiBp
+bnN0YWxsIFR5cGVTY3JpcHQgdXNpbmcgbnBtIChOb2RlIFBhY2thZ2UgTWFu
+YWdlcikgd2l0aCB0aGUgZm9sbG93aW5nIGNvbW1hbmQ6CgoKYGBgCm5wbSBp
+bnN0YWxsIC1nIHR5cGVzY3JpcHQKYGBgCgpUaGlzIGNvbW1hbmQgaW5zdGFs
+bHMgVHlwZVNjcmlwdCBnbG9iYWxseSBvbiB5b3VyIG1hY2hpbmUsIGFsbG93
+aW5nIHlvdSB0byB1c2UgdGhlIGB0c2NgIGNvbW1hbmQgZnJvbSBhbnkgZGly
+ZWN0b3J5LkFmdGVyIGluc3RhbGxhdGlvbiwgeW91IGNhbiB2ZXJpZnkgdGhl
+IGluc3RhbGxhdGlvbiB5IGNoZWNraW5nIHRoZSBUeXBlU2NyaXB0IHZlcnNp
+b246CgoKYGBgCnRzYyAtdgoKYGBgCgpUaGlzIHdpbGwgcHJpbnQgdGhlIGlu
+c3RhbGxlZCBUeXBlU2NyaXB0IHZlcnNpb24uCgojIyMgVXNhZ2UKQmVsb3cg
+aXMgYW4gZXhhbXBsZSBvZiBob3cgeW91IGNhbiB1c2UgdGhlIFF1ZXJ5Q3Jh
+ZnRlciBjbGFzcyB0byBidWlsZCBhIFNRTCBxdWVyeS4KCiMjIyBUeXBlU2Ny
+aXB0CmBgYAppbXBvcnQgUXVlcnlDcmFmdGVyIGZyb20gJy4vc3JjL21haW4n
+OwoKY29uc3QgZmlsdGVycyA9IHsgbmFtZTogJ0pvaG4nLCBhZ2U6ICczMCcg
+fTsKY29uc3QgZmllbGRzID0gWyduYW1lJywgJ2FnZScsICdhZGRyZXNzJ107
+CmNvbnN0IHRhYmxlID0gJ3VzZXJzJzsKCmNvbnN0IHF1ZXJ5Q3JhZnRlciA9
+IG5ldyBRdWVyeUNyYWZ0ZXIoZmlsdGVycywgZmllbGRzLCB0YWJsZSk7CnF1
+ZXJ5Q3JhZnRlci5hZGRPZmZzZXQoMTApOwpxdWVyeUNyYWZ0ZXIuYWRkTGlt
+aXQoNSk7CnF1ZXJ5Q3JhZnRlci5zb3J0UmVzdWx0cygnbmFtZScsICdBU0Mn
+KTsKcXVlcnlDcmFmdGVyLmpvaW5Db25kaXRpb25zKCdvcmRlcnMnLCB7ICd1
+c2Vrcyc6ICdpZCcsICdvcmRlcic6ICd1c2VyX2lkJyB9KTsKCmNvbnN0IHNx
+bFF1ZXJ5ID0gcXVlcnlDcmFmdGVyLmJ1aWxkRmluYWxRdWVyeSgpOwpjb25z
+b2xlLmxvZyhzcWxRdWVyeSk7CmBgYAoKIyMjIExvY2FsIERldiBUZXN0aW5n
+ClJ1biB0aGUgZXhhbXBsZSBmaWxlIHRvIGNoZWNrIHRoZSBvdXRwdXQ6CmBg
+YAp0c3ggLlxleGFtcGxlc1xleGFtcGxlXzAxLnRzCmBgYAojIyMgUnVubmlu
+ZyBUZXN0IENhc2VzClRvIHJ1biB0aGUgdGVzdCBjYXNlcywgdXNlIHRoZSBm
+b2xsb3dpbmcgY29tbWFuZDoKYGBgCm5weCBqZXN0CmBgYAoKIyMjIFNjcmlw
+dHMKdGVzdDogUGxhY2Vob2xkZXIgZm9yIHRlc3QgY29tbWFuZApsaW50OiBS
+dW4gRVNMaW50IHdpdGggYXV0b21hdGljIGZpeGluZwpEZXZlbG9wbWVudApU
+byBsaW50IHRoZSBjb2RlLCBydW46CmBgYApucG0gcnVuIGxpbnQKCmBgCiMj
+IyBMaWNlbnNlClRoaXMgcHJvamVjdCBpcyBsaWNlbnNlZCB1bmRlciB0aGUg
+TUlUIExpY2Vuc2UgLSBzZWUgdGhlIExJQ0VOU0UgZmlsZSBmb3IgZGV0YWls
+cwoKCjMjIyBDb250cmlidXRpbmcKQ29udHJpYnV0aW9ucyBhcmUgd2VsY29t
+ZSFQbGVhc2Ugc3VibWl0IGEgcHVsbCByZXF1ZXN0IG9yIG9wZW4gYW4gaXNz
+dWUgZGlzY3VzcyB3aGF0IHlvdSB3b3VsZCBsaWtlIHRvIGNoYW5nZS4KCjMj
+IyBJc3N1ZXMKRm9yIGFueSBpc3N1ZXMsIHBsZWFzZSB1c2UgdGhlIEdpdEh1
+YiBbSXNzdWVzXShodHRwczovL2dpdGh1Yi5jb20vcGllMTExL3BnX3F1ZXJ5
+X2NyYWZ0ZXIvaXNzdWVzKSBwYWdlLgo=
